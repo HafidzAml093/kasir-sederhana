@@ -1,0 +1,192 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Fungsi untuk membagi string menjadi vektor berdasarkan karakter pemisah
+vector<string> split(string str, char delimiter) {
+    vector<string> result;
+    string word = "";
+    for (int i = 0; i < str.length(); i++) {
+        if (str[i] == delimiter) {
+            result.push_back(word);
+            word = "";
+        } else {
+            word = word + str[i];
+        }
+    }
+    result.push_back(word);
+    return result;
+}
+
+// Struct untuk menyimpan informasi barang
+struct Barang {
+    string kode;
+    string nama;
+    int harga;
+    int jumlah;
+};
+
+int main() {
+    int jumlah_pembeli;
+    cout << "Masukkan jumlah pembeli: ";
+    cin >> jumlah_pembeli;
+
+    for (int p = 0; p < jumlah_pembeli; ++p) {
+        char Pembeli[30];
+        int jumtotal = 0, jumbayar, kembalian, potongan;
+        string input, kode;
+
+        cout << "         *CAFE PRINCE*            " << endl;
+        cout << "===================================" << endl;
+        cout << "Nama Pembeli   :";
+        cin >> Pembeli;
+        cout << "===================================" << endl;
+        cout << "Pilihan Menu Minuman yang tersedia " << endl;
+        cout << "001 - Hazelnut Milk - Rp.14.000" << endl;
+        cout << "002 - Red velved Milk - Rp.13.000" << endl;
+        cout << "003 - Orange Juice - Rp.10.000" << endl;
+        cout << "004 - Strawberry Juice - Rp.10.000" << endl;
+        cout << "005 - Banana Juice - Rp.10.000" << endl;
+        cout << "006 - Iced Coffee - Rp.15.000" << endl;
+        cout << "007 - Green Tea - Rp.12.000" << endl;
+        cout << "008 - Chocolate Milk - Rp.13.000" << endl;
+        cout << "009 - Lemonade - Rp.11.000" << endl;
+        cout << "010 - Water - Rp.5.000" << endl;
+        cout << "===================================" << endl;
+        cout << "Pilihan Menu Makanan yang tersedia " << endl;
+        cout << "011 - Nasi Goreng - Rp.18.000" << endl;
+        cout << "012 - Mie Goreng - Rp.17.000" << endl;
+        cout << "013 - Sate Ayam - Rp.20.000" << endl;
+        cout << "014 - Gado-Gado - Rp.15.000" << endl;
+        cout << "015 - Soto Ayam - Rp.16.000" << endl;
+
+        vector<Barang> daftarBarang;
+
+        // Input barang yang dibeli
+        do {
+            Barang barang;
+            cout << "===================================" << endl;
+            cout << "Barang yang dipilih  :";
+            cin >> barang.kode;
+
+            // Cek apakah kode barang valid
+            if (barang.kode < "001" || barang.kode > "015") {
+                cout << "Kode barang tidak valid. Pembelian dihentikan." << endl;
+                break;
+            }
+
+            cout << "Jumlah beli   :";
+            cin >> barang.jumlah;
+
+            // Menentukan harga dan nama barang berdasarkan kode barang
+            if (barang.kode == "001") {
+                barang.harga = 14000;
+                barang.nama = "Hazelnut Milk";
+            } else if (barang.kode == "002") {
+                barang.harga = 13000;
+                barang.nama = "Red velved Milk";
+            } else if (barang.kode == "003") {
+                barang.harga = 10000;
+                barang.nama = "Orange juice";
+            } else if (barang.kode == "004") {
+                barang.harga = 10000;
+                barang.nama = "Strawberry juice";
+            } else if (barang.kode == "005") {
+                barang.harga = 10000;
+                barang.nama = "Banana juice";
+            } else if (barang.kode == "006") {
+                barang.harga = 15000;
+                barang.nama = "Iced Coffee";
+            } else if (barang.kode == "007") {
+                barang.harga = 12000;
+                barang.nama = "Green Tea";
+            } else if (barang.kode == "008") {
+                barang.harga = 13000;
+                barang.nama = "Chocolate Milk";
+            } else if (barang.kode == "009") {
+                barang.harga = 11000;
+                barang.nama = "Lemonade";
+            } else if (barang.kode == "010") {
+                barang.harga = 5000;
+                barang.nama = "Water";
+            } else if (barang.kode == "011") {
+                barang.harga = 18000;
+                barang.nama = "Nasi Goreng";
+            } else if (barang.kode == "012") {
+                barang.harga = 17000;
+                barang.nama = "Mie Goreng";
+            } else if (barang.kode == "013") {
+                barang.harga = 20000;
+                barang.nama = "Sate Ayam";
+            } else if (barang.kode == "014") {
+                barang.harga = 15000;
+                barang.nama = "Gado-Gado";
+            } else if (barang.kode == "015") {
+                barang.harga = 16000;
+                barang.nama = "Soto Ayam";
+            }
+
+            // Cek apakah barang tersedia
+            if (barang.harga == 0) {
+                cout << "Barang tidak tersedia. Pembelian dihentikan." << endl;
+                break;
+            }
+
+            // Menambahkan barang ke daftar
+            daftarBarang.push_back(barang);
+
+            cout << "Mau tambah barang lagi [Y/N]: ";
+            cin >> input;
+        } while (input == "Y" || input == "y");
+
+        // Cek apakah ada barang yang dibeli
+        if (daftarBarang.empty()) {
+            cout << "Tidak ada barang yang dibeli. Transaksi dibatalkan." << endl;
+            continue;
+        }
+
+        // Mencetak struk pembayaran
+        cout << "===================================" << endl;
+        cout << "Struk Pembayaran" << endl;
+        cout << "===================================" << endl;
+        cout << "Nama Pembeli: " << Pembeli << endl;
+
+        // Mencetak informasi setiap barang
+        for (int i = 0; i < daftarBarang.size(); i++) {
+            cout << "Barang ke-" << i + 1 << endl;
+            cout << "Kode barang    :" << daftarBarang[i].kode << endl;
+            cout << "Nama barang    :" << daftarBarang[i].nama << endl;
+            cout << "Harga          :" << daftarBarang[i].harga << endl;
+            cout << "Jumlah         :" << daftarBarang[i].jumlah << endl;
+            cout << "Total          :" << daftarBarang[i].harga * daftarBarang[i].jumlah << endl;
+            cout << "-------------------------------------" << endl;
+
+            // Menambahkan total harga barang ke-i ke jumlah total
+            jumtotal += daftarBarang[i].harga * daftarBarang[i].jumlah;
+        }
+
+        // Menghitung potongan
+        if (jumtotal == 100000 || jumtotal < 500000) {
+            potongan = 0.05 * jumtotal;
+        } else if (jumtotal > 500000) {
+            potongan = 0.10 * jumtotal;
+        } else {
+            potongan = 0;
+        }
+
+        cout << "Jumlah total   :" << jumtotal << endl;
+        cout << "Potongan       :" << potongan << endl;
+        cout << "Jumlah bayar   :" << jumtotal - potongan << endl;
+        cout << "Uang yang dibayar :";
+        cin >> jumbayar;
+        kembalian = jumbayar - (jumtotal - potongan);
+        cout << "Kembalian      :" << kembalian << endl;
+
+        cout << endl;
+        cout << "Terima kasih telah berbelanja di CAFE PRINCE" << endl;
+        cout << "Semoga hari Anda menyenangkan" << endl;
+    }
+
+    return 0;
+}
+
